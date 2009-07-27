@@ -1,0 +1,13 @@
+log/*.log
+tmp/**/*
+config/database.yml
+db/schema.rb
+*~
+Thumbs.db
+.idea
+coverage
+db/test.sqlite3
+*.swp
+tmp/restart.txt
+public/system
+config/initializers/paperclip.rb

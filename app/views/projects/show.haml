@@ -1,0 +1,41 @@
+%p
+  Name:
+  = @project.name
+%p
+  Description:
+  = @project.description
+%p
+  =link_to "Milestone'y:", project_milestones_path(@project.id)
+  -@project.milestones.each do |mile|
+    =link_to mile.name project_milestone(@project.id, mile.id)
+    Ostatnia zmiana:
+    =mile.updated_at
+  =link_to 'Dodaj milestone', new_project_milestone_path(@project.id)
+%p
+  =link_to 'Tablice:', project_writeboards_path(@project.id)
+  %br
+  -@project.writeboards.each do |write|
+    =link_to write.title, project_writeboard_path(@project.id, write.id)
+    Ostatnia zmiana:
+    =write.updated_at
+    Wersja:
+    =write.version
+    %br
+  = link_to 'Dodaj tablicę', new_project_writeboard_path(@project.id)
+%p
+  Osoby mające dostęp do projektu:
+  %table
+    %th Login
+    %th Ostatnie logowanie
+    %th Poziom dostępu
+    -@project.users.each do |user|
+      %tr
+        %td
+          = user.username
+        %td
+          = user.last_login_at
+        %td
+          = @project.permissions.find_by_user_id(user.id).level
+
+
+=link_to 'Edytuj ustawienia', edit_project_path(@project)

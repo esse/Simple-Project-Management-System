@@ -1,0 +1,27 @@
+%h1= @writeboard.title
+
+%p= @writeboard.content
+%br
+Ostatnio edytowane:
+= @writeboard.updated_at
+%br
+Autor:
+= User.find(@writeboard.user_id).username
+%br
+Wersja:
+= @writeboard.version
+%br
+=link_to 'Edytuj', edit_project_writeboard_path(@project.id, @writeboard.id)
+|
+=link_to 'Usuń', project_writeboard_path(@project.id, @writeboard.id), :method => :delete, :confirm => 'Czy na pewno usunąć?'
+%br
+Poprzednie wersje:
+%table
+  %th Numer wersji
+  %th Autor
+  %th Data utworzenia
+  - @writeboard.versions.each do |ver|
+    %tr
+      %td= link_to ver.version, project_writeboard_writeboard_version_path(@project.id, @writeboard.id, ver.version)
+      %td= User.find(@writeboard.user_id).username
+      %td= ver.updated_at

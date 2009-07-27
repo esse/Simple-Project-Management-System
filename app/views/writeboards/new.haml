@@ -1,0 +1,20 @@
+%h1 Nowa tablice
+
+- form_for :writeboard, @writeboard, :url => project_writeboards_path(@project.id), :method => :post do |f|
+  = f.error_messages
+
+  %p
+    = f.label :title
+    %br
+    = f.text_field :title
+
+  %p
+    = f.label :content
+    %br
+    = f.text_area :content
+
+  %p
+    = f.submit 'Utwórz'
+
+lub
+= link_to 'Anuluj', project_writeboards_path

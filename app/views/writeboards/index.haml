@@ -1,0 +1,27 @@
+Tablice w projekcie
+=@project.name
+%table
+  %th Tytuł
+  %th Autor
+  %th Data ostatniej edycji
+  %th Data stworzenia
+  %th Wersja
+  %th Opcje
+  - @writeboards.each do |writeboard|
+    %tr
+      %td
+        =writeboard.title
+      %td
+        =writeboard.user.username
+      %td
+        =writeboard.updated_at
+      %td
+        =writeboard.created_at
+      %td
+        =writeboard.version
+      %td
+        =link_to 'Pokaż', project_writeboard_path(@project.id, writeboard.id)
+        =link_to 'Edytuj', edit_project_writeboard_path(@project.id, writeboard.id)
+        =link_to 'Usuń', project_writeboard_path(@project.id, writeboard.id), :method => :delete, :confirm => 'Czy na pewno usunąć?'
+= link_to 'Dodaj nową stronę', new_project_writeboard_path(@project.id)       
+

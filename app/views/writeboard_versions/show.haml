@@ -1,0 +1,8 @@
+%h1= "Oglądasz wersję nr <i>#{@writeboard.version}</i> tablicy <i>#{@writeboard.title}</i> z dnia #{@writeboard.updated_at}"
+
+%p= @writeboard.content
+%br
+Autor:
+= User.find(@writeboard.user_id).username
+%br
+= link_to 'Wróć', project_writeboard_path(@project.id, @writeboard.writeboard_id)

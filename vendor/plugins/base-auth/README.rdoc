@@ -1,0 +1,130 @@
+= BaseAuth
+
+== 0.2 beta
+
+=== Best Authorization System Ever
+
+== Installation
+
+Install it as you would any other plugin from github, i.e. 
+  script/plugin install git://github.com/aenima/base-auth.git
+
+== Authorization by Controller
+
+=== Key concept
+
+This plugin makes 2 assumptions:
+
+- you have a current_user method in your controller which returns the currently signed in user which you want to check authorization for.
+- you check authorization using instance methods of your user objects
+
+This worked really well for me so far, so there's a slight chance it will also work for you.
+
+=== Using as a before filter
+
+Simple example:
+
+  class ArticleController < ApplicationController
+    deny :user => :is_guest?
+  end
+
+The above example will deny all guest access (will call current_user.is_guest? method to determine if the user is a guest or not). If you want to allow guests to list articles, but nothing more, use:
+
+  allow :index, :user => :is_guest?
+
+or
+
+  allow :only => :index, :user => :is_guest?
+
+if you want to allow every user who is guest OR admin, you'd go:
+
+  allow :index, :user => [ :is_guest?, :is_admin? ]
+
+if you give an Array as :user value, at least one condition has to be met. For more sophisticated conditions you can pass a string, which will be instance_eval'd:
+
+  allow :index, :user => 'is_guest? or ( is_admin? and is_moderator? )'
+
+Still, there are cases when you want to check something in the controller.
+In that case you can use :exec param instead of :user like this:
+
+  class ArticleController < ApplicationController
+    allow :exec => :check_auth
+    
+    def check_auth
+      session[:allowed] == 'yes'
+    end
+  end
+
+You can also pass a string, which will be eval'd, or a Proc, which will be called.
+
+If you pass a method which accepts arguments, an object will be passed to it as a parameter. Which obejct? By default an instance variable named after singluarized controller name. So:
+
+  class ArticleController < ApplicationController
+    allow :edit, :update, :user => :owns?
+  end
+
+Will call current_user.owns?( @article ) to check for permission. You can override this by passing :object argument, which can be a Symbol (naming instance variable to be used) or the object itself.
+
+By default an Authorization::PermisionDenied exception will be raised. You can also use :method parameter to specify which method should be called instead or :redirect_to to redirect user instead.
+
+With :message parameter you can pass a message that will be stored in exception.
+
+
+=== Using in actions
+
+In actions you can use allow!, deny!, allow? and deny? methods. The ones with '!' will raise an exception, while the ones with '?' will only return true or false:
+
+  def destroy
+    allow! :user => :owns?
+    @article.destroy
+  end
+
+
+=== Using in views
+
+You can use allow and deny methods in your views and pass them a block to execute:
+
+<% allow :user => :is_admin? do %>
+  Only admins can see that!
+<% end>
+
+<% deny :user => :is_guest? do %>
+  You can't see it if you're a guest.
+<% end %>
+
+
+== Authorization by model
+
+Since version 0.2 the code has been modularized a bit and you can also authorize by model (single instance for now). It's usage is dead easy and straightforward. You just have to implement authorize instance method in a given model (as a parameter it takes user to authorize against). You don't even have to do it if you're satisfied with default implementation (supplied with plugin):
+
+  def authorize(user)
+    user.id == self.user_id
+  end
+
+This method is used by authorize! instance method which works exactly like allow! - i.e. does nothing (returns the model) if authorized and throws Authorization::PermissionDenied if not authorized:
+
+  @item = ItemModel.find(35).authorize!(current_user) #throws an exception if current_user is not authorized
+
+
+== Notes
+
+If you're using rails older than 2.0 rescuing exceptions can be a pain. For rails 1.2 I recommend using exceptional plugin:
+
+http://agilewebdevelopment.com/plugins/exceptional
+
+
+== ToDo
+
+- add support for :if parameted (should behave like the one in validations)
+- make it possible to configure default behavior (so you don't have to pass :method parameter everywhere if you always want to call a method instead of raising exception)
+- better documentation
+- model authorization: configuration of authorize! method to allow for redirection etc. (now it can only throw exceptions)
+- model authorization: authorize_for!(:actionname), i.e. let user define and use per-action authorization for a given model (different auth checks for different actions), by authorize_for_actionname methods in model
+- refactor the code structure (divide into three files)
+
+
+== Credits & Licensing
+
+Copyright (c) by Robert Nasiadek at <robert@aenima.pl>. Maintenance and small modifications (model-based auth) by Tomasz Stachewicz <tomasz.stachewicz@aenima.pl>. Distributed under MIT license.
+
+You can find more cool stuff by Aenima on our Github (http://github.com/aenima) and our blog (http://blog.aenima.pl/).

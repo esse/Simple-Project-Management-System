@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>System zarządzania projektami</title>
+  <%= stylesheet_link_tag 'scaffold' %>
+</head>
+<body>
+<div id="user_nav">
+  <% if !@user.is_guest? %>
+    <%= link_to 'Wyloguj się', logout_path %>
+  <% else %>
+    <%= link_to 'Zarejestruj się', new_user_path %> | <%= link_to 'Zaloguj się', login_path %>
+  <% end %>
+</div>
+<% if !@user.is_guest? %>
+  <div id="projects">
+    Twoje projekty: <br />
+    <% for project in @user.projects %>
+      <%= link_to project.name, dashboard_path(project.name) %><br />
+    <% end %>
+  </div>
+<% end %>
+
+<p style="color: green"><%= flash[:notice] %></p>
+
+<%= yield %>
+
+</body>
+</html>

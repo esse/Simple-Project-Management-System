@@ -1,0 +1,8 @@
+Welcome to Simple Project Management System
+
+functionality working atm:
+- writeboards with versioning
+- new projects
+- user accounts
+
+ATM there is only polish version, however i plan to add i18n support.

@@ -1,0 +1,11 @@
+Poprzednie wersje:
+%table
+  %th Numer wersji
+  %th Autor
+  %th Data utworzenia
+  - @writeboard.versions.each do |ver|
+    %tr
+      %td= link_to ver.version, project_writeboard_writeboard_version_path(@project.id, @writeboard.id, ver.version)
+      %td= User.find(@writeboard.user_id).username
+      %td= ver.updated_at
+= link_to 'Wróć', project_writeboard_path(@project.id, @writeboard.id)
