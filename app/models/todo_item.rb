@@ -2,7 +2,7 @@ class TodoItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :todo_list
   acts_as_versioned
-
+  
   include Workflow
   workflow do
     state :waiting do

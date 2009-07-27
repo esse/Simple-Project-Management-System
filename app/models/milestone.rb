@@ -3,6 +3,7 @@ class Milestone < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   has_many :todo_lists
+  has_many :uploaded_files, :as => :container
   acts_as_versioned
 
 

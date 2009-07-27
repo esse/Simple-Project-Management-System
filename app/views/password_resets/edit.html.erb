@@ -1,0 +1,12 @@
+<h1>Zmień hasło</h1>
+
+<% form_for @user_temp, :url => password_reset_path, :method => :put do |f| %>
+  <%= f.error_messages %>
+  <%= f.label :password %><br />
+  <%= f.password_field :password %><br />
+  <br />
+  <%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %><br />
+  <br />
+  <%= f.submit "Zmień hasło i zaloguj mnie" %>
+<% end %>

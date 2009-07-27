@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :todo_items
   has_many :permissions
   has_many :user_reports
- 
+  has_many :uploaded_files, :as => :container
   def is_guest?
     self.class == User::Guest
   end
@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
 
   def is_authorized?(project)
     self.projects.include? project
+  end
+
+  def deliver_password_reset_instructions!
+    reset_perishable_token!
+    Notifier.deliver_password_reset_instructions(self)
   end
 
 end

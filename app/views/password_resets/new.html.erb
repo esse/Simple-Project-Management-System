@@ -1,0 +1,11 @@
+<h1>Przypomnij hasło</h1>
+
+Wypełnij ten formularz, a na podany adres email wyślemy Ci instrukcje dotyczącą zmiany hasła:<br />
+<br />
+
+<% form_tag password_resets_path do %>
+  <label>Email:</label><br />
+  <%= text_field_tag "email" %><br />
+  <br />
+  <%= submit_tag "Przypomnij hasło" %>
+<% end %>

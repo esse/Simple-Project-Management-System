@@ -12,7 +12,7 @@
   <% if !@user.is_guest? %>
     <%= link_to 'Wyloguj się', logout_path %>
   <% else %>
-    <%= link_to 'Zarejestruj się', new_user_path %> | <%= link_to 'Zaloguj się', login_path %>
+    <%= link_to 'Zarejestruj się', new_user_path %> | <%= link_to 'Zaloguj się', login_path %> | <%= link_to 'Przypomnij hasło', new_password_reset_path %>
   <% end %>
 </div>
 <% if !@user.is_guest? %>
