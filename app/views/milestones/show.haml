@@ -1,0 +1,31 @@
+%h1= @milestone.name
+
+%p= @milestone.description
+%br
+Data zamknięcia:
+= @milestone.date
+%br
+Ostatnio edytowane:
+= @milestone.updated_at
+%br
+Osoba odpowiedzialna:
+= User.find(@milestone.user_id).username
+%br
+Wersja:
+= @milestone.version
+%br
+=link_to 'Edytuj', edit_project_milestone_path(@project.id, @milestone.id)
+|
+=link_to 'Usuń', project_milestone_path(@project.id, @milestone.id), :method => :delete, :confirm => 'Czy na pewno usunąć?'
+%br
+Poprzednie wersje:
+%table
+  %th Numer wersji
+  %th Autor
+  %th Data utworzenia
+  - @milestone.versions.each do |ver|
+    %tr
+      /%td= link_to ver.version, project_writeboard_writeboard_version_path(@project.id, @milestone.id, ver.version)
+      %td= ver.version
+      %td= User.find(ver.user_id).username
+      %td= ver.updated_at

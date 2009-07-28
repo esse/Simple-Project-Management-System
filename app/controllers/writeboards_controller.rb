@@ -11,7 +11,7 @@ class WriteboardsController < ApplicationController
   end
 
   def show
-    @writeboard = Writeboard.find_by_project_id_and_id(@project.id, params[:id])
+    @writeboard = @project.writeboards.find(params[:id])
   end
 
   def create

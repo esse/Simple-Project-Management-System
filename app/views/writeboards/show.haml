@@ -23,5 +23,5 @@ Poprzednie wersje:
   - @writeboard.versions.each do |ver|
     %tr
       %td= link_to ver.version, project_writeboard_writeboard_version_path(@project.id, @writeboard.id, ver.version)
-      %td= User.find(@writeboard.user_id).username
+      %td= User.find(ver.user_id).username
       %td= ver.updated_at

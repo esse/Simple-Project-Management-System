@@ -7,9 +7,11 @@
 %p
   =link_to "Milestone'y:", project_milestones_path(@project.id)
   -@project.milestones.each do |mile|
-    =link_to mile.name project_milestone(@project.id, mile.id)
-    Ostatnia zmiana:
-    =mile.updated_at
+    %br
+    =link_to mile.name, project_milestone_path(@project.id, mile.id)
+    Data zamknięcia:
+    =mile.date
+  %br
   =link_to 'Dodaj milestone', new_project_milestone_path(@project.id)
 %p
   =link_to 'Tablice:', project_writeboards_path(@project.id)

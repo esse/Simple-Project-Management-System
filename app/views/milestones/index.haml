@@ -1,0 +1,20 @@
+%table
+  %th Nazwa
+  %th Opis
+  %th Osoba odpowiedzialna
+  %th Data zamknięcia
+  %th Wersja
+  - @milestones.each do |milestone|
+    %tr
+      %td
+        = link_to milestone.name, project_milestone_path(@project.id, milestone.id)
+      %td
+        = milestone.description
+      %td
+        = milestone.user_id
+      %td
+        = milestone.date
+      %td
+        = milestone.version
+
+= link_to 'Dodaj nowy', new_project_milestone_path(@project.id)

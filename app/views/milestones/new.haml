@@ -1,0 +1,23 @@
+%h1 Nowy punkt przełomowy (milestone)
+
+- form_for :milestone, @milestone, :url => project_milestones_path(@project.id), :method => :post do |f|
+  = f.error_messages
+
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+
+  %p
+    = f.label :description
+    %br
+    = f.text_area :description
+
+  %p
+    = f.label :'Data zamknięcia'
+    = calendar_date_select_tag "milestone[date]", nil, :embedded => true, :time => false
+  %p
+    = f.submit 'Utwórz'
+
+lub
+= link_to 'Anuluj', project_milestones_path
