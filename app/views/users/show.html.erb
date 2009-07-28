@@ -1,18 +1,11 @@
 <p>
   <b>Username:</b>
-  <%=h @user.username %>
+  <%=h @user_temp.username %>
 </p>
 
 <p>
   <b>Email:</b>
-  <%=h @user.email %>
+  <%=h @user_temp.email %>
 </p>
 
-<p>
-  <b>Password:</b>
-  <%=h @user.password %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', root_path %>

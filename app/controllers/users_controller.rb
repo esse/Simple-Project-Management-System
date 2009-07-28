@@ -1,19 +1,21 @@
 class UsersController < ApplicationController
+  deny :user => :is_guest?, :except => [:new, :create]
+  allow :user => :is_admin?, :only => :index
   # GET /users
   # GET /users.xml
-  #def index
-  #  @users = User.all
-  #
-  #  respond_to do |format|
-  #    format.html # index.html.erb
-  #    format.xml  { render :xml => @users }
-  #  end
-  #end
+  def index
+    @users = User.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users }
+    end
+  end
 
   # GET /users/1
   # GET /users/1.xml
   def show
-    @user = User.find(params[:id])
+    @user_temp = User.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +26,7 @@ class UsersController < ApplicationController
   # GET /users/new
   # GET /users/new.xml
   def new
-    @user = User.new
+    @user_temp = User.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,14 +36,14 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    @user_temp = User.find(params[:id])
   end
 
   # POST /users
   # POST /users.xml
   def create
-    @user = User.new(params[:user])
-    if @user.save
+    @user_temp = User.new(params[:user])
+    if @user_temp.save
       flash[:notice] = 'Rejestracja poprawna.'
       redirect_to root_url
     else
@@ -52,16 +54,16 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = User.find(params[:id])
+    @user_temp = User.find(params[:id])
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user_temp.update_attributes(params[:user])
         flash[:notice] = 'User was successfully updated.'
-        format.html { redirect_to(@user) }
+        format.html { redirect_to(@user_temp) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @user_temp.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -69,8 +71,8 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+    @user_temp = User.find(params[:id])
+    @user_temp.destroy
 
     respond_to do |format|
       format.html { redirect_to(users_url) }
