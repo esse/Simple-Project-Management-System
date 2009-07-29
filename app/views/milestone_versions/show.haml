@@ -1,0 +1,11 @@
+%h1= "Oglądasz wersję nr <i>#{@milestone.version}</i> punktu milowego <i>#{@milestone.name}</i> z dnia #{@milestone.updated_at}"
+
+%p= @milestone.description
+%br
+Osoba odpowiedzialna:
+= User.find(@milestone.user_id).username
+%br
+Data zamknięcia:
+= @milestone.date    
+%br
+= link_to 'Wróć', project_milestone_path(@project.id, @milestone.milestone_id)
