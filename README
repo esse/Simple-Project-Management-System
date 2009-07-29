@@ -3,6 +3,7 @@ Welcome to Simple Project Management System
 functionality working atm:
 - writeboards with versioning
 - new projects
-- user accounts
+- user accounts (with password remind -> authlogic based)
+- milestones (basics)
 
 ATM there is only polish version, however i plan to add i18n support.

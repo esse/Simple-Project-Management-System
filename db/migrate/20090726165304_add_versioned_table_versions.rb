@@ -12,7 +12,7 @@ class AddVersionedTableVersions < ActiveRecord::Migration
     Milestone.drop_versioned_table
     TodoItem.drop_versioned_table
     TodoList.drop_versioned_table
-    remove_column :milestones, :versionr
+    remove_column :milestones, :version
     remove_column :todo_items, :version
     remove_column :todo_lists, :version
   end

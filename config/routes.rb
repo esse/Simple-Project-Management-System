@@ -2,7 +2,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects do |project|
     project.resources :permissions
     project.resources :milestones do |mile|
-      mile.resources :milestone_versions
       mile.resources :todo_lists
     end
     project.resources :writeboards do |write|
