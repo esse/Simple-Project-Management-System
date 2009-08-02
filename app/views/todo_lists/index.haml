@@ -1,0 +1,17 @@
+= "Listy zadań do wykonania powiązane z punktem przełomowym #{@milestone.name}:"
+%ul
+  - @todo_lists.each do |todo_list|
+    %li
+      = link_to todo_list.name, project_milestone_todo_list_path(@project.id, @milestone.id, todo_list.id)
+      %br
+      = todo_list.description
+      %ul
+        - todo_list.todo_items.each do |todo_item|
+        = "Poszczególne zadania:"
+          %li
+            = todo_item.name
+            = todo_item.description
+            = User.find(todo_item.user_id)
+
+
+= link_to 'Dodaj nowy', new_project_milestone_path(@project.id)

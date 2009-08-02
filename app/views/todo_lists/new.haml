@@ -1,0 +1,19 @@
+%h1 Nowa lista zadań
+
+- form_for :todo_list, @todo_list, :url => project_milestone_todo_lists_path(@project.id, @milestone.id), :method => :post do |f|
+  = f.error_messages
+
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+
+  %p
+    = f.label :description
+    %br
+    = f.text_area :description
+  %p
+    = f.submit 'Utwórz'
+
+lub
+= link_to 'Anuluj', project_milestone_path(@project.id, @milestone.id)

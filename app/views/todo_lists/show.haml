@@ -1,0 +1,30 @@
+
+%h4
+  Zadania do wykonania w liście
+  %i= @todo_list.name
+  powiązane z punktem przełomowym
+  %i= @milestone.name
+%ul
+  /- @todo_lists.each do |todo_list|
+  /  %li
+  /    = link_to todo_list.name, project_milestone_todo_list_path(@project.id, @milestone.id, todo_list.id)
+  /    %br
+  /    = @todo_list.description
+  /    %ul
+  %table
+    %th Nazwa
+    %th Opis
+    %th Osoba odpowiedzialna
+    %th Status
+    %th Akcje
+  - @todo_list.todo_items.each do |todo_item|
+    %tr
+      %td= todo_item.name
+      %td= todo_item.description
+      %td= User.find(todo_item.user_id).username
+      %td= todo_item.workflow_state
+      /%td= link_to 'a', state_project_milestone_todo_list_todo_item_path(@project.id, @milestone.id, @todo_list.id, todo_item.id, 'confirm')
+
+
+
+= link_to 'Dodaj nowe zadanie', new_project_milestone_todo_list_todo_item_path(@project.id, @milestone.id, @todo_list.id)

@@ -1,5 +1,6 @@
 class MilestonesController < ApplicationController
   before_filter :get_project
+  before_filter :get_users
   deny :user => :is_guest?
   allow :user => :is_authorized?, :object => :project
   def index
@@ -46,6 +47,10 @@ class MilestonesController < ApplicationController
   rescue
     flash[:error] = 'Wystąpił błąd'
     redirect_to project_milestone_path(@milestone.project.id, @milestone.id)
+  end
+
+  def get_users
+    @users = User.all #TODO Temp
   end
 
 end

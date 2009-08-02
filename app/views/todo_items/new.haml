@@ -1,0 +1,24 @@
+%h1 Nowe zadanie
+
+- form_for :todo_item, @todo_item, :url => project_milestone_todo_list_todo_items_path(@project.id, @milestone.id, @todo_list.id), :method => :post do |f|
+  = f.error_messages
+
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+
+  %p
+    = f.label :description
+    %br
+    = f.text_area :description
+
+  %p
+    = f.label :'osoba odpowiedzialna'
+    %br
+    = f.collection_select(:user_id, @users, :id, :username)
+  %p
+    = f.submit 'Utwórz'
+
+lub
+= link_to 'Anuluj', project_milestone_todo_list_path(@project.id, @milestone.id, @todo_list.id)

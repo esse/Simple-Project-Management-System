@@ -16,6 +16,11 @@
   %p
     = f.label :'Data zamknięcia'
     = calendar_date_select_tag "milestone[date]", nil, :embedded => true, :time => false
+
+  %p
+    = f.label :'osoba odpowiedzialna'
+    %br
+    = f.collection_select(:user_id, @users, :id, :username)
   %p
     = f.submit 'Zapisz'
 

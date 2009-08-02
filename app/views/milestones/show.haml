@@ -11,9 +11,12 @@ Ostatnio edytowane:
 Osoba odpowiedzialna:
 = User.find(@milestone.user_id).username
 %br
-Wersja:
-= @milestone.version
-%br
+Listy zadań do wykonania:
+%ul
+  - @milestone.todo_lists.each do |list|
+    %li
+      = link_to list.name, project_milestone_todo_list_path(@project.id, @milestone.id, list.id)
+  %li= link_to 'Dodaj', new_project_milestone_todo_list_path(@project.id, @milestone.id)
 =link_to 'Edytuj', edit_project_milestone_path(@project.id, @milestone.id)
 |
 =link_to 'Usuń', project_milestone_path(@project.id, @milestone.id), :method => :delete, :confirm => 'Czy na pewno usunąć?'

@@ -1,8 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :projects do |project|
+  map.resources :projects, :members => { :state => :put } do |project|
     project.resources :permissions
-    project.resources :milestones do |mile|
-      mile.resources :todo_lists
+    project.resources :milestones, :members => { :state => :put } do |mile|
+      mile.resources :todo_lists, :members => { :state => :put } do |todo|
+        todo.resources :todo_items, :members => { :state => :put }
+      end
     end
     project.resources :writeboards do |write|
       write.resources :writeboard_versions
